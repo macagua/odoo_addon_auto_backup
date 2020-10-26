@@ -3,11 +3,12 @@ import urllib
 import requests
 
 from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 
 GOOGLE_OAUTH_ENDPOINT = 'https://oauth2.googleapis.com/token'
 GOOGLE_USER_PROMPT_URL = 'https://accounts.google.com/o/oauth2/v2/auth'
 GOOGLE_DRIVE_UPLOAD_API = 'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart'
-GOOGLE_DRIVE_UPDATE_API = 'https://www.googleapis.com/drive/v3/files/'
+GOOGLE_DRIVE_API = 'https://www.googleapis.com/drive/v3/files/'
 
 
 class GoogleDrive(models.Model):
@@ -27,8 +28,7 @@ class GoogleDrive(models.Model):
             'scope': 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/drive.file',
         }
 
-        params_text = '&'.join(['%s=%s' % (key,
-                                           urllib.parse.quote(value, safe=''))
+        params_text = '&'.join(['%s=%s' % (key, urllib.parse.quote(value, safe=''))
                                 for (key, value) in params.items()])
         return GOOGLE_USER_PROMPT_URL + '?' + params_text
 
@@ -73,15 +73,16 @@ class GoogleDrive(models.Model):
 
             return req_json.get('access_token')
 
-        return False
+        raise UserError(_("Authorization code is not available."))
 
     def upload(self, binary_stream, file_name):
+        folder_id = self.env['ir.config_parameter'].sudo().get_param('abackup_gdrive_location')
+
         token = self.get_access_token()
         if token:
             # Upload file
             para = json.dumps({
                 'name': file_name,
-                'originalFilename': file_name
             })
             headers = {"Authorization": "Bearer %s" % token}
             files = {
@@ -94,9 +95,44 @@ class GoogleDrive(models.Model):
 
             # Update file name
             file_id = req.json().get('id')
+            if folder_id:
+                params = {
+                    'addParents': [folder_id],
+                    'enforceSingleParent': True
+                }
+            else:
+                params = None
             body = {
                 'name': file_name,
             }
-            req = requests.patch(GOOGLE_DRIVE_UPDATE_API + file_id, headers=headers, json=body)
+            req = requests.patch(GOOGLE_DRIVE_API + file_id, headers=headers, json=body, params=params)
             req.raise_for_status()
 
+    def list(self, prefix):
+        folder_id = self.env['ir.config_parameter'].sudo().get_param('abackup_gdrive_location')
+
+        token = self.get_access_token()
+        if token:
+            if folder_id:
+                query = "name contains '%s' and '%s' in parents" % (prefix, folder_id)
+            else:
+                query = "name contains '%s'" % prefix
+            params = {
+                'q': query,
+                'pageSize': 1000
+            }
+            headers = {"Authorization": "Bearer %s" % token}
+
+            req = requests.get(GOOGLE_DRIVE_API, headers=headers, params=params)
+            req.raise_for_status()
+            return req.json().get('files')
+        return False
+
+    def delete(self, file_ids):
+        if len(file_ids) == 0:
+            return
+        token = self.get_access_token()
+        if token:
+            for id in file_ids:
+                headers = {"Authorization": "Bearer %s" % token}
+                req = requests.delete(GOOGLE_DRIVE_API + id, headers=headers)

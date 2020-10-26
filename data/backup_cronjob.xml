@@ -5,7 +5,7 @@
             <field name="name">Auto Backup: Database Backup</field>
             <field name="model_id" ref="model_odoo_addon_auto_backup_backup"/>
             <field name="state">code</field>
-            <field name="code">model.run_backup()</field>
+            <field name="code">model.run()</field>
             <field name="user_id" ref="base.user_root" />
             <field name="active">False</field>
             <field name="interval_number">1</field>
