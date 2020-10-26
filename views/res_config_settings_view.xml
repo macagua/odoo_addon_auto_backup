@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.screwproof</field>
+            <field name="model">res.config.settings</field>
+            <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@id='multi_company']" position="after">
+                    <div id="abackup_settings">
+                        <h2>Auto Backup</h2>
+                        <div class='row mt16 o_settings_container'>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="abackup_gdrive_backup"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_gdrive_backup"/>
+                                    <div class="text-muted">
+                                        Backup file will be automatically uploaded to your Google Drive.
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_gdrive_backup','=',False)]}">
+                                        <div class="mt8 row">
+                                            <label for="abackup_gdrive_client_id" string="Client ID"
+                                                   class="col-3 col-lg-3 o_light_label"/>
+                                            <field name="abackup_gdrive_client_id" nolabel="1"/>
+                                            <label for="abackup_gdrive_client_secret" string="Client Secret"
+                                                   class="col-3 col-lg-3 o_light_label"/>
+                                            <field name="abackup_gdrive_client_secret" password="True"
+                                                   nolabel="1"/>
+                                        </div>
+                                        <div class="mt8 row">
+                                            <div class="col-sm text-center">
+                                                <field name="abackup_gdrive_auth_code" invisible="1"/>
+                                                <button class="btn btn-link"
+                                                        name="action_setup_abackup_auth_code"
+                                                        type="object">
+                                                    <i class="fa fa-arrow-right"/>
+                                                    Set up authorization code
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="mt8 row">
+                                            <label for="abackup_gdrive_location"
+                                                   class="col-3 col-lg-3 o_light_label"/>
+                                            <field name="abackup_gdrive_location" nolabel="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field name="abackup_local_backup"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_local_backup"/>
+                                    <div class="text-muted">
+                                        Backup file will be automatically saved to the local path you configured
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_local_backup','=',False)]}">
+                                        <div>
+                                            <div class="content-group mt16">
+                                                <label for="abackup_local_path" class="o_light_label"/>
+                                                <field name="abackup_local_path"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 attrs="{'invisible': [('abackup_local_backup','=',False),
+                                 ('abackup_gdrive_backup','=',False)]}">
+                                <div class="o_setting_left_pane">
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_interval_number"/>
+                                    <div class="text-muted">
+                                        Back up every
+                                    </div>
+                                    <div class="content-group">
+                                        <div>
+                                            <div class="content-group mt16">
+                                                <field name="abackup_interval_number" class="oe_inline"/>
+                                                <field name="abackup_interval_type" class="oe_inline"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 attrs="{'invisible': [('abackup_local_backup','=',False)]}">
+                                <div class="o_setting_left_pane">
+                                    <field name="abackup_local_cleanup"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_local_cleanup"/>
+                                    <div class="text-muted">
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_local_cleanup','=',False)]}">
+                                        <div class="content-group mt16">
+                                            <field name="abackup_local_cleanup_itv_number" class="oe_inline"/>
+                                            <field name="abackup_local_cleanup_itv_type" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 attrs="{'invisible': [('abackup_gdrive_backup','=',False)]}">
+                                <div class="o_setting_left_pane">
+                                    <field name="abackup_gdrive_cleanup"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_gdrive_cleanup"/>
+                                    <div class="text-muted">
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_gdrive_cleanup','=',False)]}">
+                                        <div class="content-group mt16">
+                                            <field name="abackup_gdrive_cleanup_itv_number" class="oe_inline"/>
+                                            <field name="abackup_gdrive_cleanup_itv_type" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="gdrive_auth_code_wizard" model="ir.ui.view">
+            <field name="name">gdrive_auth_code_wizard</field>
+            <field name="model">res.config.settings</field>
+            <field name="mode">primary</field>
+            <field name="priority">2048</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <span>Set up an authorization code and reload this page, or enter one yourself in the field
+                            below.
+                        </span>
+                        <field name="abackup_gdrive_uri"
+                               class="fa fa-arrow-right mt-1"
+                               widget="url"
+                               text="Get Authorization Code"
+                               readonly="1"
+                               nolabel="1"/>
+                    </group>
+                    <group class="mt-3">
+                        <field name="abackup_gdrive_auth_code" required="1"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>
+
