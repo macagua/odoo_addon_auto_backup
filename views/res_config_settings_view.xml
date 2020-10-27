@@ -40,11 +40,23 @@
                                                     Set up authorization code
                                                 </button>
                                             </div>
+
                                         </div>
                                         <div class="mt8 row">
                                             <label for="abackup_gdrive_location"
                                                    class="col-3 col-lg-3 o_light_label"/>
                                             <field name="abackup_gdrive_location" nolabel="1"/>
+                                        </div>
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_gdrive_fail','=',False)]}">
+                                        <field name="abackup_gdrive_fail" invisible="1"/>
+                                        <div class="text-warning">
+                                            <strong>
+                                                <i class="fa fa-warning" role="img"/>
+                                            </strong>
+                                            Cannot connect to Google Drive. Please check your Client ID, Client
+                                            secret and Authorization code.
                                         </div>
                                     </div>
                                 </div>
@@ -89,40 +101,56 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 col-lg-6 o_setting_box"
+                                 attrs="{'invisible': [('abackup_local_backup','=',False),
+                                 ('abackup_gdrive_backup','=',False)]}">
+                            </div>
                             <div class="col-12 col-lg-6 o_setting_box">
-                            </div>
-                            <div class="col-12 col-lg-6 o_setting_box"
-                                 attrs="{'invisible': [('abackup_local_backup','=',False)]}">
                                 <div class="o_setting_left_pane">
-                                    <field name="abackup_local_cleanup"/>
-                                </div>
-                                <div class="o_setting_right_pane">
-                                    <label for="abackup_local_cleanup"/>
-                                    <div class="text-muted">
-                                    </div>
-                                    <div class="content-group"
-                                         attrs="{'invisible': [('abackup_local_cleanup','=',False)]}">
-                                        <div class="content-group mt16">
-                                            <field name="abackup_local_cleanup_itv_number" class="oe_inline"/>
-                                            <field name="abackup_local_cleanup_itv_type" class="oe_inline"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-6 o_setting_box"
-                                 attrs="{'invisible': [('abackup_gdrive_backup','=',False)]}">
-                                <div class="o_setting_left_pane">
-                                    <field name="abackup_gdrive_cleanup"/>
+                                    <field attrs="{'readonly': [('abackup_gdrive_backup','=',False)]}"
+                                           name="abackup_gdrive_cleanup"/>
                                 </div>
                                 <div class="o_setting_right_pane">
                                     <label for="abackup_gdrive_cleanup"/>
                                     <div class="text-muted">
+                                        Backup files on your Google Drive older than the specified period will be
+                                        automatically removed.
+                                        <br/>
+                                        Kindly note that this feature will not work correctly if you manually rename
+                                        the generated backup files.
+                                        <br/>
+                                        One month is calculated as 30 days. One week is calculated as 7 days.
                                     </div>
                                     <div class="content-group"
                                          attrs="{'invisible': [('abackup_gdrive_cleanup','=',False)]}">
                                         <div class="content-group mt16">
                                             <field name="abackup_gdrive_cleanup_itv_number" class="oe_inline"/>
                                             <field name="abackup_gdrive_cleanup_itv_type" class="oe_inline"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-6 o_setting_box">
+                                <div class="o_setting_left_pane">
+                                    <field attrs="{'readonly': [('abackup_local_backup','=',False)]}"
+                                           name="abackup_local_cleanup"/>
+                                </div>
+                                <div class="o_setting_right_pane">
+                                    <label for="abackup_local_cleanup"/>
+                                    <div class="text-muted">
+                                        Backup files in your local path older than the specified period will be
+                                        automatically removed.
+                                        <br/>
+                                        Kindly note that this feature will not work correctly if you manually rename
+                                        the generated backup files.
+                                        <br/>
+                                        One month is calculated as 30 days. One week is calculated as 7 days.
+                                    </div>
+                                    <div class="content-group"
+                                         attrs="{'invisible': [('abackup_local_cleanup','=',False)]}">
+                                        <div class="content-group mt16">
+                                            <field name="abackup_local_cleanup_itv_number" class="oe_inline"/>
+                                            <field name="abackup_local_cleanup_itv_type" class="oe_inline"/>
                                         </div>
                                     </div>
                                 </div>

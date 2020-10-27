@@ -2,32 +2,31 @@
 {
     'name': "Odoo Addon Auto Backup",
 
-    'summary': """
-        Avoid screwing up the database.""",
+    'summary': """Automatically back up your database on a predetermined basis""",
 
     'description': """
-        Long description of module's purpose
+Odoo Addon Auto Backup
+==================================
+Data is always an important aspect of any operational system. With
+this module, your Odoo database is safe. The module helps back up
+your database on a schedule that you set, so you always have
+a fallback should anything unexpected occurs.
+
+
+Main Features
+-------------
+* Automatically generate database backups.
+* Save backup file to local machine or Google Drive
+* Automatically clean up old backups.
     """,
 
-    'author': "My Company",
-    'website': "http://www.yourcompany.com",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/13.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
-    'category': 'Uncategorized',
+    'author': "Magenest",
+    'website': "https://magenest.com/en/",
+    'category': 'Extra Tools',
     'version': '0.1',
-
-    # any module necessary for this one to work correctly
     'depends': ['base', 'base_setup'],
-
-    # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
         'data/backup_cronjob.xml',
         'views/res_config_settings_view.xml',
-    ],
-    # only loaded in demonstration mode
-    'demo': [
     ],
 }
