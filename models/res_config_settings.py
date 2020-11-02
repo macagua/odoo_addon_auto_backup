@@ -2,7 +2,6 @@ import os
 
 from odoo import fields, models, api, _
 from odoo.exceptions import ValidationError
-from requests.exceptions import HTTPError
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
@@ -26,10 +25,10 @@ class ResConfigSettings(models.TransientModel):
                                                       config_parameter='abackup_local_cleanup_itv_number',
                                                       help='The limit for which old backups will be kept.')
     abackup_local_cleanup_itv_type = fields.Selection(string='Clean up limit Unit',
-                                                      default='weeks',
+                                                      default='week(s)',
                                                       config_parameter='abackup_local_cleanup_itv_type',
-                                                      selection=[('weeks', 'Weeks'),
-                                                                 ('months', 'Months')], )
+                                                      selection=[('week(s)', 'Week(s)'),
+                                                                 ('month(s)', 'Month(s)')], )
 
     # Google Drive backup
     abackup_gdrive_backup = fields.Boolean(string='Back up to Google Drive',
@@ -63,10 +62,10 @@ class ResConfigSettings(models.TransientModel):
                                                        config_parameter='abackup_gdrive_cleanup_itv_number',
                                                        help='The limit for which old backups will be kept.')
     abackup_gdrive_cleanup_itv_type = fields.Selection(string='Clean up limit unit',
-                                                       default='weeks',
+                                                       default='week(s)',
                                                        config_parameter='abackup_gdrive_cleanup_itv_type',
-                                                       selection=[('weeks', 'Weeks'),
-                                                                  ('months', 'Months')], )
+                                                       selection=[('week(s)', 'Week(s)'),
+                                                                  ('month(s)', 'Month(s)')], )
 
     abackup_gdrive_fail = fields.Boolean(config_parameter='abackup_gdrive_fail', default=False)
 
@@ -86,10 +85,10 @@ class ResConfigSettings(models.TransientModel):
     abackup_interval_type = fields.Selection(string='Interval Unit',
                                              default='days',
                                              config_parameter='abackup_interval_type',
-                                             selection=[('hours', 'Hours'),
-                                                        ('days', 'Days'),
-                                                        ('weeks', 'Weeks'),
-                                                        ('months', 'Months')], )
+                                             selection=[('hours', 'Hour(s)'),
+                                                        ('days', 'Day(s)'),
+                                                        ('weeks', 'Week(s)'),
+                                                        ('months', 'Month(s)')], )
 
     @api.onchange('abackup_gdrive_client_id')
     def _onchange_gdrive_uri(self):
@@ -136,7 +135,15 @@ class ResConfigSettings(models.TransientModel):
             raise ValidationError(_("Please set a correct Google Drive cleanup interval."))
 
         # Super
+        Config = self.env['ir.config_parameter'].sudo()
+        temp_auth_code = Config.get_param('abackup_gdrive_auth_code')
+
         super(ResConfigSettings, self).set_values()
+
+        if temp_auth_code != self.abackup_gdrive_auth_code:
+            Config.set_param('abackup_gdrive_token', False)
+            Config.set_param('abackup_gdrive_refresh_code', False)
+            Config.set_param('abackup_gdrive_expires_at', False)
 
         # Set up cronjob
         cronjob = self.env.ref('odoo_addon_auto_backup.ir_cron_database_backup', raise_if_not_found=False)

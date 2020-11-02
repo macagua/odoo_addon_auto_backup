@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="backup_tree_view">
+            <field name="name">backup_tree_view</field>
+            <field name="model">odoo_addon_auto_backup.backup</field>
+            <field name="arch" type="xml">
+                <tree string="Backup History" create="false" edit="false" delete="false"
+                      decoration-muted="(local_path and is_local_removed) and (gdrive_id and is_gdrive_removed)">
+                    <field name="created_time"/>
+                    <field name="file_name"/>
+                    <field name="local_path"/>
+                    <field name="gdrive_url" widget="url" text="Link"/>
+                    <field name="gdrive_id" invisible="1"/>
+                    <field name="is_local_removed"/>
+                    <field name="is_gdrive_removed"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="backup_search_view" model="ir.ui.view">
+            <field name="name">backup_search_view</field>
+            <field name="model">odoo_addon_auto_backup.backup</field>
+            <field name="arch" type="xml">
+                <search string="Search backup">
+                    <field name="file_name"
+                           filter_domain="[('file_name', 'ilike', self)]"/>
+                    <field name="gdrive_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="backup_history_action" model="ir.actions.act_window">
+            <field name="name">Backup History</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">odoo_addon_auto_backup.backup</field>
+            <field name="view_mode">tree</field>
+            <field name="search_view_id" ref="backup_search_view"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    No backup here!
+                </p>
+            </field>
+        </record>
+
+        <record id="backup_action" model="ir.actions.server">
+            <field name="name">Run backup</field>
+            <field name="model_id" ref="model_odoo_addon_auto_backup_backup"/>
+            <field name="state">code</field>
+            <field name="code">model.run_manually()</field>
+        </record>
+
+        <menuitem id="backup_menu_root"
+                  groups="base.group_system"
+                  web_icon="odoo_addon_auto_backup,static/description/icon.png"
+                  name="Back up"/>
+
+        <menuitem id="backup_history_menu"
+                  name="Backup History"
+                  parent="backup_menu_root"
+                  action="backup_history_action"/>
+
+        <menuitem id="run_backup_menu"
+                  name="Run Backup"
+                  parent="backup_history_menu"
+                  action="backup_action"
+                  sequence="1"/>
+
+        <menuitem id="backup_menu_config"
+                  name="Configuration"
+                  parent="backup_menu_root"
+                  groups="base.group_system"
+                  sequence="25"/>
+
+        <menuitem id="backup_config_settings_menu"
+                  name="Settings"
+                  parent="backup_menu_config"
+                  action="abackup_config_settings_action"
+                  groups="base.group_system"
+                  sequence="0"/>
+
+    </data>
+</odoo>

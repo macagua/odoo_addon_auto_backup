@@ -28,5 +28,9 @@ Main Features
     'data': [
         'data/backup_cronjob.xml',
         'views/res_config_settings_view.xml',
+        'views/abackup_views.xml',
+        'views/user_form_views.xml',
+        'mails/backup_information_mail.xml',
+        'security/ir.model.access.csv'
     ],
 }

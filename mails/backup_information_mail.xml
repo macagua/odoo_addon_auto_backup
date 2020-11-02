@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="email_template_auto_backup" model="mail.template">
+            <field name="name">Auto Backup: Backup Information</field>
+            <field name="model_id" ref="model_odoo_addon_auto_backup_backup"/>
+            <field name="subject">New backup generated</field>
+            <field name="email_to">${ctx.get('email')}</field>
+            <field name="body_html" type="html">
+<div style="font-size: 14px;">
+    <div style="margin: 10px 0px 10px 0px;">
+        % set website_url = object.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        % set backup_menu_id = object.env.ref('odoo_addon_auto_backup.backup_menu_root').id
+
+        <p style="margin: 10px 0px 10px 0px;">
+            Hi ${ctx.get('name')},
+        </p>
+        <p style="margin: 10px 0px 10px 0px;">
+            As per schedule, we have backed up your database at ${ctx.get('time')}. Here are some
+            details:
+        </p>
+    </div>
+    <div style="margin: 15px 0px 15px 0px; padding: 10px; border: 2px dashed #474747; color: #474747;">
+        <p style="margin: 5px; padding: 0px;">
+            <strong>Local file:</strong>
+            % if object.local_path:
+                ${object.local_path}
+            % else:
+                None
+            % endif
+        </p>
+        <p style="margin: 5px; padding: 0px;">
+            <strong>Google Drive URL:</strong>
+            % if object.gdrive_id:
+                <a href="https://drive.google.com/file/d/${object.gdrive_id}" target="_blank">
+                    https://drive.google.com/file/d/${object.gdrive_id}
+                </a>
+            % else:
+                None
+            % endif
+        </p>
+    </div>
+    <div style="margin: 10px 0px 10px 0px;">
+        <p style="margin: 10px 0px 10px 0px;">
+            Kindly note that ${object.get_cleanup_warning_str()}. You can also view past backups on your Odoo backup history page
+            <a href="${website_url}/web#menu_id=${backup_menu_id}">here</a>.
+        </p>
+        <p style="margin: 10px 0px 10px 0px;">
+            If you have any questions or concerns, please let us know. We're glad to help!
+        </p>
+        <p style="margin: 10px 0px 10px 0px;">
+            <em>Kindest regards,</em>
+            <br/>
+            Auto Backup Team.
+        </p>
+    </div>
+</div>
+            </field>
+            <field name="user_signature" eval="False"/>
+        </record>
+    </data>
+</odoo>
