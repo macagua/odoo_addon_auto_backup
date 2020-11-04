@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Odoo Addon Auto Backup",
+    'name': "Google Drive Auto Backup",
 
-    'summary': """Automatically back up your database on a predetermined basis""",
+    'summary': """Automatically back up database to local or Google Drive with clean up option.""",
 
     'description': """
 Odoo Addon Auto Backup
