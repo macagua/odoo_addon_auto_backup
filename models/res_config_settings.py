@@ -96,17 +96,19 @@ class ResConfigSettings(models.TransientModel):
 
     @api.onchange('abackup_gdrive_backup')
     def _onchange_gdrive_backup(self):
-        self.abackup_gdrive_cleanup = False
+        if not self.abackup_gdrive_backup:
+            self.abackup_gdrive_cleanup = False
 
     @api.onchange('abackup_local_backup')
     def _onchange_local_backup(self):
-        self.abackup_local_cleanup = False
+        if not self.abackup_local_backup:
+            self.abackup_local_cleanup = False
 
     def set_values(self):
         # Validate local path
         if self.abackup_local_backup:
             if not self.abackup_local_path or not os.access(self.abackup_local_path, os.W_OK):
-                raise ValidationError(_("The specified local path is not writable."))
+                raise ValidationError(_("The specified local path does not exist, or is not writable."))
             # Standardize local path
             if self.abackup_local_path[-1] != '/':
                 self.abackup_local_path += '/'
