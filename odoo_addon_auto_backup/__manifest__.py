@@ -10,7 +10,7 @@ Odoo Addon Auto Backup
 Data is always an important aspect of any operational system. With
 this module, your Odoo database is safe. The module helps back up
 your database on a schedule that you set, so you always have
-a fallback should anything unexpected occur.
+a fallback plan should anything unexpected occur.
 
 
 Main Features
