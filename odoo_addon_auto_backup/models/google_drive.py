@@ -5,7 +5,7 @@ import random
 import string
 from datetime import datetime, timedelta
 
-from odoo import fields, models, api, _
+from odoo import api, models, _
 from odoo.exceptions import UserError
 
 GOOGLE_OAUTH_ENDPOINT = 'https://oauth2.googleapis.com/token'
@@ -17,6 +17,7 @@ MAX_ATTEMPT = 5
 
 class GoogleDrive(models.Model):
     _name = 'odoo_addon_auto_backup.google_drive'
+    _description = 'Google Drive'
 
     def gen_local_token(self):
         chars = string.ascii_letters + string.digits

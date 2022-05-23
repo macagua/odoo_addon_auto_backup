@@ -1,0 +1,533 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* odoo_addon_auto_backup
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0-20220420\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-05-23 07:02+0000\n"
+"PO-Revision-Date: 2022-05-23 07:02+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: odoo_addon_auto_backup
+#: model:mail.template,body_html:odoo_addon_auto_backup.email_template_auto_backup
+msgid ""
+"<div style=\"font-size: 14px;\">\n"
+"    <div style=\"margin: 10px 0px 10px 0px;\">\n"
+"        % set website_url = object.env['ir.config_parameter'].sudo().get_param('web.base.url')\n"
+"        % set backup_menu_id = object.env.ref('odoo_addon_auto_backup.backup_menu_root').id\n"
+"\n"
+"        <p style=\"margin: 10px 0px 10px 0px;\">\n"
+"            Hi ${ctx.get('name')},\n"
+"        </p>\n"
+"        <p style=\"margin: 10px 0px 10px 0px;\">\n"
+"            As per schedule, we have backed up your database at ${ctx.get('time')}. Here are some\n"
+"            details:\n"
+"        </p>\n"
+"    </div>\n"
+"    <div style=\"margin: 15px 0px 15px 0px; padding: 10px; border: 2px dashed #474747; color: #474747;\">\n"
+"        <p style=\"margin: 5px; padding: 0px;\">\n"
+"            <strong>Local file:</strong>\n"
+"            % if object.local_path:\n"
+"                ${object.local_path}\n"
+"            % else:\n"
+"                None\n"
+"            % endif\n"
+"        </p>\n"
+"        <p style=\"margin: 5px; padding: 0px;\">\n"
+"            <strong>Google Drive URL:</strong>\n"
+"            % if object.gdrive_id:\n"
+"                <a href=\"https://drive.google.com/file/d/${object.gdrive_id}\" target=\"_blank\">\n"
+"                    https://drive.google.com/file/d/${object.gdrive_id}\n"
+"                </a>\n"
+"            % else:\n"
+"                None\n"
+"            % endif\n"
+"        </p>\n"
+"    </div>\n"
+"    <div style=\"margin: 10px 0px 10px 0px;\">\n"
+"        <p style=\"margin: 10px 0px 10px 0px;\">\n"
+"            Kindly note that ${object.get_cleanup_warning_str()}. You can also view past backups on your Odoo backup history page\n"
+"            <a href=\"${website_url}/web#menu_id=${backup_menu_id}\">here</a>.\n"
+"        </p>\n"
+"        <p style=\"margin: 10px 0px 10px 0px;\">\n"
+"            If you have any questions or concerns, please let us know. We're glad to help!\n"
+"        </p>\n"
+"        <p style=\"margin: 10px 0px 10px 0px;\">\n"
+"            <em>Kindest regards,</em>\n"
+"            <br/>\n"
+"            Auto Backup Team.\n"
+"        </p>\n"
+"    </div>\n"
+"</div>\n"
+"            "
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid ""
+"<i class=\"fa fa-arrow-right\"/>\n"
+"                                                        Set up authorization code"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.gdrive_auth_code_wizard
+msgid ""
+"<span>Set up an authorization code and reload this page, or enter one yourself in the field\n"
+"                            below.\n"
+"                        </span>"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid ""
+"<strong>\n"
+"                                                    <i class=\"fa fa-warning\" role=\"img\"/>\n"
+"                                                </strong>\n"
+"                                                Cannot connect to Google Drive. Please check your Client ID, Client\n"
+"                                                secret and Authorization code."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/google_drive.py:0
+#, python-format
+msgid "Authorization code is not available."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_users_view_form
+msgid "Auto Backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.actions.server,name:odoo_addon_auto_backup.ir_cron_database_backup_ir_actions_server
+#: model:ir.cron,cron_name:odoo_addon_auto_backup.ir_cron_database_backup
+#: model:ir.cron,name:odoo_addon_auto_backup.ir_cron_database_backup
+msgid "Auto Backup: Database Backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_fail
+msgid "Auto backup Google Drive Fail"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_backup
+msgid ""
+"Automatically generated backup files will be saved to a Google Drive folder "
+"that you specify. You will need to set up your own Google client ID and "
+"client secret to use this feature."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_local_backup
+msgid ""
+"Automatically generated backup files will be saved to your local machine "
+"(server). You will need to set a local path to save the file in the field "
+"below."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_cleanup
+msgid ""
+"Automatically remove old backup files saved in the specified folder on your "
+"Google Drive. The limit can be set using the interval field below."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_local_cleanup
+msgid ""
+"Automatically remove old backup files saved on your local machine. The limit"
+" can be set using the interval field below."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.ui.menu,name:odoo_addon_auto_backup.backup_menu_root
+msgid "Back up"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid "Back up every"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_interval_number
+msgid "Back up interval"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_backup
+msgid "Back up to Google Drive"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model,name:odoo_addon_auto_backup.model_odoo_addon_auto_backup_backup
+msgid "Backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.actions.act_window,name:odoo_addon_auto_backup.backup_history_action
+#: model:ir.ui.menu,name:odoo_addon_auto_backup.backup_history_menu
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.backup_tree_view
+msgid "Backup History"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid ""
+"Backup file will be automatically saved to the local path you configured.\n"
+"                                            <br/>\n"
+"                                            <strong>Please note:</strong>\n"
+"                                            This must be an absolute path that starts with '/'."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid "Backup file will be automatically uploaded to your Google Drive."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid ""
+"Backup files in your local path older than the specified period will be\n"
+"                                            automatically removed.\n"
+"                                            <br/>\n"
+"                                            <em>Please note</em>\n"
+"                                            that this feature will not work correctly if you manually rename\n"
+"                                            the generated backup files.\n"
+"                                            <br/>\n"
+"                                            1 month is calculated as 30 days. 1 week is calculated as 7 days."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid ""
+"Backup files on your Google Drive older than the specified period will be\n"
+"                                            automatically removed.\n"
+"                                            <br/>\n"
+"                                            <em>Please note</em>\n"
+"                                            that this feature will not work correctly if you manually rename\n"
+"                                            the generated backup files.\n"
+"                                            <br/>\n"
+"                                            1 month is calculated as 30 days. 1 week is calculated as 7 days."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_location
+msgid ""
+"Backup files will be saved to the folder with this ID on your Google Drive."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_local_path
+msgid "Backup files will be saved to this location on your local machine."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_local_path
+msgid "Backup path"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_local_backup
+msgid "Backup to local machine"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_cleanup_itv_number
+msgid "Clean up Google Drive limit"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_cleanup_itv_type
+msgid "Clean up Google Drive limit unit"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_local_cleanup_itv_number
+msgid "Clean up local limit"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_local_cleanup_itv_type
+msgid "Clean up local limit Unit"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_client_id
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid "Client ID"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.res_config_settings_view_form
+msgid "Client Secret"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_client_secret
+msgid "Client secret"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model,name:odoo_addon_auto_backup.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.ui.menu,name:odoo_addon_auto_backup.backup_menu_config
+msgid "Configuration"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__created_time
+msgid "Created Time"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__create_uid
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__create_date
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_interval_type__days
+msgid "Day(s)"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_cleanup
+msgid "Delete old backups on Google Drive"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_local_cleanup
+msgid "Delete old local backups"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__display_name
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__file_name
+msgid "File name"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_location
+msgid "Folder ID"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model,name:odoo_addon_auto_backup.model_odoo_addon_auto_backup_google_drive
+msgid "Google Drive"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_auth_code
+msgid "Google Drive Authorization Code"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_uri
+msgid "Google Drive URI"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__gdrive_url
+msgid "Google Drive URL"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__gdrive_id
+msgid "Google Drive file ID"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_interval_type__hours
+msgid "Hour(s)"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__id
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__id
+msgid "ID"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_config_settings__abackup_interval_type
+msgid "Interval Unit"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup____last_update
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__write_uid
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__write_date
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_google_drive__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__local_path
+msgid "Local path"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_gdrive_cleanup_itv_type__month(s)
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_interval_type__months
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_local_cleanup_itv_type__month(s)
+#, python-format
+msgid "Month(s)"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:mail.template,subject:odoo_addon_auto_backup.email_template_auto_backup
+msgid "New backup generated"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.actions.act_window,help:odoo_addon_auto_backup.backup_history_action
+msgid "No backup here!"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/backup.py:0
+#, python-format
+msgid "Please configure your backup preferences in Settings first."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#, python-format
+msgid "Please set a correct Google Drive cleanup interval."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#, python-format
+msgid "Please set a correct backup interval."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__is_local_removed
+msgid "Removed locally"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_odoo_addon_auto_backup_backup__is_gdrive_removed
+msgid "Removed on Google Drive"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.ui.menu,name:odoo_addon_auto_backup.run_backup_menu
+msgid "Run Backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.actions.server,name:odoo_addon_auto_backup.backup_action
+msgid "Run backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model_terms:ir.ui.view,arch_db:odoo_addon_auto_backup.backup_search_view
+msgid "Search backup"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,field_description:odoo_addon_auto_backup.field_res_users__receive_backup_email
+msgid "Send backup information email to this user"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#, python-format
+msgid "Set up refresh token"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.actions.act_window,name:odoo_addon_auto_backup.abackup_config_settings_action
+#: model:ir.ui.menu,name:odoo_addon_auto_backup.backup_config_settings_menu
+msgid "Settings"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_cleanup_itv_number
+msgid "The Google Drive limit for which old backups will be kept."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_uri
+msgid "The URL to generate the authorization code from Google"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_interval_number
+msgid "The frequency that the backup job will run."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_local_cleanup_itv_number
+msgid "The local limit for which old backups will be kept."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#, python-format
+msgid "The specified local path does not exist, or is not writable."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model,name:odoo_addon_auto_backup.model_res_users
+msgid "Users"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_gdrive_cleanup_itv_type__week(s)
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_interval_type__weeks
+#: model:ir.model.fields.selection,name:odoo_addon_auto_backup.selection__res_config_settings__abackup_local_cleanup_itv_type__week(s)
+#, python-format
+msgid "Week(s)"
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: code:addons/odoo_addon_auto_backup/models/res_config_settings.py:0
+#, python-format
+msgid ""
+"You must set up Client ID and Client Secret to use Google Drive backup."
+msgstr ""
+
+#. module: odoo_addon_auto_backup
+#: model:ir.model.fields,help:odoo_addon_auto_backup.field_res_config_settings__abackup_gdrive_auth_code
+msgid ""
+"You should use the automatically generated URL to get an authorization code."
+" You can also manually fill the code in this field if you already obtained "
+"it."
+msgstr ""

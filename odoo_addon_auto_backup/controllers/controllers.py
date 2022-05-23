@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
+import json
 from odoo import http
 from werkzeug.utils import redirect
-import json
 
 
 class GoogleAuthEndpoint(http.Controller):

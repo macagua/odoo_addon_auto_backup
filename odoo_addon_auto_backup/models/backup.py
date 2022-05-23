@@ -4,7 +4,7 @@ import os
 import pytz
 
 import odoo
-from odoo import fields, models, api, http, _
+from odoo import fields, http, models, _
 from odoo.exceptions import UserError
 
 _logger = logging.getLogger(__name__)
@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 
 class Backup(models.Model):
     _name = 'odoo_addon_auto_backup.backup'
+    _description = 'Backup'
 
     PREFIX = 'ABK'
     TIME_FORMAT = '%Y-%m-%d-%H-%M-%S'

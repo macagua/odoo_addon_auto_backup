@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 {
     'name': "Google Drive Auto Backup",
 
@@ -24,7 +23,11 @@ Main Features
     'website': "https://magenest.com/en/",
     'category': 'Extra Tools',
     'version': '0.1',
-    'depends': ['base', 'base_setup'],
+    'depends': [
+        'base',
+        'base_setup',
+        'mail',
+    ],
     'data': [
         'data/backup_cronjob.xml',
         'views/res_config_settings_view.xml',

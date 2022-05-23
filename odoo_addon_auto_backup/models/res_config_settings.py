@@ -1,45 +1,45 @@
 import os
 
-from odoo import fields, models, api, _
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
-    # Local backup
+    # Local Backup
     abackup_local_backup = fields.Boolean(string="Backup to local machine",
                                           config_parameter='abackup_local_backup',
-                                          help='Automatically generated backup files will be saved to your local'
-                                               'machine (server). You will need to set a local path to save the'
+                                          help='Automatically generated backup files will be saved to your local '
+                                               'machine (server). You will need to set a local path to save the '
                                                'file in the field below.')
     abackup_local_path = fields.Char(string="Backup path",
                                      config_parameter='abackup_local_path',
                                      help='Backup files will be saved to this location on your local machine.')
     abackup_local_cleanup = fields.Boolean(string="Delete old local backups",
                                            config_parameter='abackup_local_cleanup',
-                                           help='Automatically remove old backup files saved on your local machine.'
+                                           help='Automatically remove old backup files saved on your local machine. '
                                                 'The limit can be set using the interval field below.')
-    abackup_local_cleanup_itv_number = fields.Integer(string='Clean up limit',
+    abackup_local_cleanup_itv_number = fields.Integer(string='Clean up local limit',
                                                       required=True,
                                                       default=1,
                                                       config_parameter='abackup_local_cleanup_itv_number',
-                                                      help='The limit for which old backups will be kept.')
-    abackup_local_cleanup_itv_type = fields.Selection(string='Clean up limit Unit',
+                                                      help='The local limit for which old backups will be kept.')
+    abackup_local_cleanup_itv_type = fields.Selection(string='Clean up local limit Unit',
                                                       default='week(s)',
                                                       config_parameter='abackup_local_cleanup_itv_type',
                                                       selection=[('week(s)', 'Week(s)'),
                                                                  ('month(s)', 'Month(s)')], )
 
-    # Google Drive backup
+    # Google Drive Backup
     abackup_gdrive_backup = fields.Boolean(string='Back up to Google Drive',
                                            config_parameter='abackup_gdrive_backup',
-                                           help='Automatically generated backup files will be saved to a Google'
-                                                'Drive folder that you specify. You will need to set up your own Google'
+                                           help='Automatically generated backup files will be saved to a Google '
+                                                'Drive folder that you specify. You will need to set up your own Google '
                                                 'client ID and client secret to use this feature.')
-    abackup_gdrive_auth_code = fields.Char(string='Authorization Code',
+    abackup_gdrive_auth_code = fields.Char(string='Google Drive Authorization Code',
                                            config_parameter='abackup_gdrive_auth_code',
                                            help='You should use the automatically generated URL to get an authorization '
-                                                'code. You can also manually fill the code in this field if you already'
+                                                'code. You can also manually fill the code in this field if you already '
                                                 'obtained it.')
     abackup_gdrive_client_id = fields.Char(string='Client ID',
                                            config_parameter='abackup_gdrive_client_id')
@@ -47,32 +47,33 @@ class ResConfigSettings(models.TransientModel):
                                                config_parameter='abackup_gdrive_client_secret')
     abackup_gdrive_location = fields.Char(string="Folder ID",
                                           config_parameter='abackup_gdrive_location',
-                                          help='Backup files will be saved to the folder with this ID on'
+                                          help='Backup files will be saved to the folder with this ID on '
                                                'your Google Drive.')
 
     abackup_gdrive_cleanup = fields.Boolean(string="Delete old backups on Google Drive",
                                             config_parameter='abackup_gdrive_cleanup',
                                             help='Automatically remove old backup files saved in the specified folder '
-                                                 'on your Google Drive. The limit can be set using the interval field'
+                                                 'on your Google Drive. The limit can be set using the interval field '
                                                  'below.')
 
-    abackup_gdrive_cleanup_itv_number = fields.Integer(string='Clean up limit',
+    abackup_gdrive_cleanup_itv_number = fields.Integer(string='Clean up Google Drive limit',
                                                        required=True,
                                                        default=1,
                                                        config_parameter='abackup_gdrive_cleanup_itv_number',
-                                                       help='The limit for which old backups will be kept.')
-    abackup_gdrive_cleanup_itv_type = fields.Selection(string='Clean up limit unit',
+                                                       help='The Google Drive limit for which old backups will be kept.')
+    abackup_gdrive_cleanup_itv_type = fields.Selection(string='Clean up Google Drive limit unit',
                                                        default='week(s)',
                                                        config_parameter='abackup_gdrive_cleanup_itv_type',
                                                        selection=[('week(s)', 'Week(s)'),
                                                                   ('month(s)', 'Month(s)')], )
 
-    abackup_gdrive_fail = fields.Boolean(config_parameter='abackup_gdrive_fail', default=False)
+    abackup_gdrive_fail = fields.Boolean(string="Auto backup Google Drive Fail",
+                                         config_parameter='abackup_gdrive_fail', default=False)
 
     def _compute_gdrive_uri(self):
         return self.env['odoo_addon_auto_backup.google_drive'].get_user_redirect_url(self.abackup_gdrive_client_id)
 
-    abackup_gdrive_uri = fields.Char(string='URI',
+    abackup_gdrive_uri = fields.Char(string='Google Drive URI',
                                      help="The URL to generate the authorization code from Google",
                                      default=_compute_gdrive_uri)
 
@@ -127,9 +128,9 @@ class ResConfigSettings(models.TransientModel):
                 not self.abackup_local_cleanup_itv_number
                 or self.abackup_local_cleanup_itv_number <= 0
                 or not self.abackup_local_cleanup_itv_type):
-            raise ValidationError(_("Please set a correct GDrive cleanup interval."))
+            raise ValidationError(_("Please set a correct Google Drive cleanup interval."))
 
-        # Validate GDrive clean up interval
+        # Validate Google Drive clean up interval
         if self.abackup_gdrive_cleanup and (
                 not self.abackup_gdrive_cleanup_itv_number
                 or self.abackup_gdrive_cleanup_itv_number <= 0

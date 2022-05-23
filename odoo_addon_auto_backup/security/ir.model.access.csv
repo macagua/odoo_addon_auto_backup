@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 admin,admin,model_odoo_addon_auto_backup_backup,base.group_system,1,1,1,1
+access_odoo_addon_auto_backup_google_drive,access_odoo_addon_auto_backup_google_drive,model_odoo_addon_auto_backup_google_drive,base.group_system,1,1,1,1
